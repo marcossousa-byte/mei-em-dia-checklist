@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MEI em dia</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fa;--surface:#fff;--ink:#14213d;--muted:#5b6678;--line:#dde3ee;--track:#e3e8f1;--fill:#2f86e0;--done:#1f9d55;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1624;--surface:#182236;--ink:#eaf0fb;--muted:#9aa7bd;--line:#2a3750;--track:#2a3750;--fill:#4a9cf0;--done:#38c172}}
+:root[data-theme="dark"]{--bg:#0f1624;--surface:#182236;--ink:#eaf0fb;--muted:#9aa7bd;--line:#2a3750;--track:#2a3750;--fill:#4a9cf0;--done:#38c172}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.5 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 80px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:14px 0 12px;border-bottom:1px solid var(--line)}
+h1{font-size:1.5rem;font-weight:800;margin:0;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 10px}
+.bar{height:26px;background:var(--track);border-radius:13px;overflow:hidden;position:relative}
+.bar i{display:block;height:100%;width:0;background:var(--fill);border-radius:13px;transition:width .4s ease}
+.bar.full i{background:var(--done)}
+.bar b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--ink)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.fact small{display:block;color:var(--muted);font-size:.78rem}
+.fact strong{font-size:1.05rem}
+.fact.warn strong{color:#d64545}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+.panel h2{font-size:1rem;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label.f{display:flex;flex-direction:column;font-size:.78rem;color:var(--muted);gap:3px}
+input[type=text],input[type=month],textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+textarea{min-height:90px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--fill);outline-offset:2px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.btn{font:inherit;font-weight:700;font-size:.85rem;border:1.5px solid var(--fill);color:var(--fill);background:transparent;border-radius:10px;padding:8px 14px;cursor:pointer}
+.btn[aria-pressed="true"],.btn.solid{background:var(--fill);color:#fff}
+.btn.danger{border-color:#d64545;color:#d64545}
+.sec{border-radius:14px;overflow:hidden;margin-bottom:12px;background:var(--surface);border:1px solid var(--line)}
+.sec>button.head{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--c);color:#fff;cursor:pointer}
+.sec>button.head:focus-visible{outline:3px solid var(--fill);outline-offset:-3px}
+.ring{flex:none;width:46px;height:46px;border-radius:50%;background:#fff;color:var(--c);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.hd{flex:1;min-width:0}
+.hd h3{margin:0;font-size:1.02rem;font-weight:800}
+.hd p{margin:1px 0 6px;font-size:.88rem;opacity:.95}
+.mini{height:6px;background:rgba(255,255,255,.3);border-radius:3px;overflow:hidden}
+.mini i{display:block;height:100%;background:#fff;width:0;transition:width .3s}
+.tag{font-size:.75rem;opacity:.9;margin-top:4px}
+.chev{flex:none;transition:transform .2s;font-size:1.3rem}
+.sec.open .chev{transform:rotate(90deg)}
+.body{display:none;padding:6px 16px 16px}
+.sec.open .body{display:block}
+.intro{color:var(--muted);font-size:.88rem;margin:8px 0}
+.it{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.it:last-of-type{border-bottom:0}
+.it input{appearance:none;flex:none;width:24px;height:24px;margin:1px 0 0;border:2px solid var(--c);border-radius:7px;display:grid;place-items:center;cursor:pointer;background:transparent}
+.it input:checked{background:var(--c)}
+.it input:checked::after{content:"✓";color:#fff;font-weight:800;font-size:.9rem}
+.it input:focus-visible{outline:3px solid var(--fill);outline-offset:2px}
+.it span{flex:1}
+.it input:checked+span{color:var(--muted);text-decoration:line-through}
+.secbtns{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.link{display:inline-block;background:var(--c);color:#fff;text-decoration:none;font-weight:700;font-size:.85rem;border-radius:10px;padding:9px 14px}
+.opt{display:flex;gap:8px;align-items:center;font-size:.85rem;color:var(--muted);margin:8px 0}
+.empty{text-align:center;color:var(--muted);padding:24px}
+.foot{color:var(--muted);font-size:.8rem;margin-top:18px}
+@media (max-width:520px){.grid,.facts{grid-template-columns:1fr}}
+@media print{header.top .sub,.tools,.secbtns,.chev{display:none}.sec .body{display:block!important}header.top{position:static}body::before{display:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>MEI em dia</h1>
+  <p class="sub">Caixa, notas fiscais e obrigações · salvo automaticamente neste aparelho</p>
+  <div class="bar" id="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"><i id="barFill"></i><b id="barTxt"></b></div>
+</header>
+
+<div class="facts">
+  <div class="fact" id="fDas"><small>Vencimento do DAS</small><strong>—</strong></div>
+  <div class="fact" id="fDasn"><small>Declaração anual (DASN-SIMEI)</small><strong>—</strong></div>
+</div>
+
+<section class="panel">
+  <h2>Dados do negócio</h2>
+  <div class="grid">
+    <label class="f">Nome / nome fantasia<input type="text" id="pNome" autocomplete="organization"></label>
+    <label class="f">CNPJ<input type="text" id="pCnpj" inputmode="numeric" placeholder="00.000.000/0000-00"></label>
+    <label class="f">Atividade<input type="text" id="pAtv"></label>
+    <label class="f">Mês de referência<input type="month" id="pMes"></label>
+  </div>
+</section>
+
+<div class="tools">
+  <button class="btn" id="bPend" aria-pressed="false">Ver pendências</button>
+  <button class="btn" id="bAll">Marcar tudo do mês</button>
+  <button class="btn" id="bOpen">Abrir/fechar todas</button>
+  <button class="btn" id="bPrint">Imprimir</button>
+  <button class="btn danger" id="bReset">Zerar mês</button>
+</div>
+
+<div id="list"></div>
+
+<section class="panel">
+  <h2>Meus lembretes e pendências</h2>
+  <textarea id="notes" placeholder="Ex.: cobrar nota do fornecedor, conferir maquininha…"></textarea>
+</section>
+
+<p class="foot">Material educativo. Confirme regras, prazos e valores nos canais oficiais; as obrigações variam conforme a atividade. Seus dados ficam só neste navegador.</p>
+</div>
+
+<script>
+var SECS=[
+{id:'s1',scope:'m',c:'#1b4d8f',ic:'R$',n:'1. Gestão de caixa',d:'Registre entradas, saídas e separe PF x PJ',tag:'Diário',
+ intro:'Registre entradas e saídas com frequência.',
+ items:['Registrei vendas e serviços recebidos, inclusive Pix e cartão.','Anotei despesas do negócio: compras, taxas, aluguel, transporte e outras.','Conferi extratos bancários e recebimentos das maquininhas.','Separei, sempre que possível, o dinheiro pessoal do dinheiro da empresa.','Guardei notas de compras, recibos e comprovantes.','Conferi o saldo: entradas menos saídas e planejei os próximos pagamentos.']},
+{id:'s2',scope:'m',c:'#e86a00',ic:'NF',n:'2. Emissão de nota fiscal',d:'Identifique a operação e emita no portal oficial',tag:'Por venda',
+ intro:'Confira o tipo de operação: serviço ou venda de mercadoria.',
+ items:['Identifiquei se é prestação de serviço ou venda de produto.','Para serviços, acessei o emissor nacional, informei tomador, descrição, valor e competência.','Para mercadorias, confirmei com a SEFAZ estadual qual documento fiscal/emissor utilizar.','Revisei os dados antes de emitir e salvei/enviei o documento ao cliente.'],
+ hint:'Serviços: Emissor Nacional da NFS-e. Mercadorias: consulte a SEFAZ do seu estado.',link:['Emissor Nacional NFS-e','https://www.nfse.gov.br/EmissorNacional']},
+{id:'s3',scope:'m',c:'#5c9a2e',ic:'eS',n:'3. Folha de pagamento',d:'Administre no eSocial se tiver empregado',tag:'Mensal',optional:true,
+ intro:'Preencha esta parte somente se o MEI tiver empregado.',
+ items:['Confirmei o registro/admissão do empregado e os dados cadastrais no eSocial.','Registrei remuneração, jornada, férias, afastamentos e demais eventos aplicáveis.','Fechei a folha no eSocial e conferi os valores calculados.','Emiti/paguei a guia de encargos (DAE) dentro do prazo e guardei o comprovante.','Entreguei recibo/holerite e mantive os documentos trabalhistas organizados.'],
+ hint:'Use o módulo simplificado para MEI; registre eventos e feche a folha para gerar a guia.',link:['Acessar eSocial','https://www.gov.br/esocial']},
+{id:'s4',scope:'m',c:'#7b2a86',ic:'DAS',n:'4. Guia mensal DAS',d:'Pague no PGMEI mesmo sem faturar',tag:'Até o dia 20',
+ intro:'O pagamento é devido enquanto o CNPJ estiver enquadrado como MEI, mesmo sem faturamento.',
+ items:['Acessei o PGMEI pelo Portal do Simples Nacional.','Selecionei o ano-calendário e a competência corretos.','Conferi valor e vencimento; a data regular é dia 20 do mês seguinte.','Gerei e paguei a guia; se estava vencida, emiti uma guia atualizada.','Salvei o comprovante e conferi a baixa do pagamento.'],
+ hint:'Emita a guia no PGMEI. Confira a competência, o valor atualizado e a data de vencimento.',link:['Acessar PGMEI','https://www8.receita.fazenda.gov.br/SimplesNacional/Aplicacoes/ATSPO/pgmei.app/Identificacao']},
+{id:'s5',scope:'y',c:'#e0364f',ic:'ANO',n:'5. Declaração anual DASN-SIMEI',d:'Declare a receita bruta até 31 de maio',tag:'Anual',
+ intro:'Informe a receita bruta do ano anterior, mesmo que não tenha faturado.',
+ items:['Somei a receita bruta de janeiro a dezembro, sem descontar despesas.','Separei receitas de comércio/indústria e de serviços, quando aplicável.','Conferi os totais com notas fiscais, extratos, recibos e controle de caixa.','Informei corretamente se tive empregado durante o ano.','Transmiti a declaração no prazo geral: até 31 de maio do ano seguinte.','Salvei o recibo de entrega e a cópia da declaração.'],
+ hint:'Preencha a receita bruta anual e informe se houve empregado. Transmita e salve o recibo.',link:['Acessar DASN-SIMEI','https://www8.receita.fazenda.gov.br/SimplesNacional/Aplicacoes/ATSPO/dasnsimei.app/Identificacao']},
+{id:'s6',scope:'m',c:'#1a8a88',ic:'ARQ',n:'6. Fechamento e arquivo',d:'Organize comprovantes e monitore pendências',tag:'Mensal',
+ items:['Atualizei o controle de caixa e arquivei notas e comprovantes do DAS.','Guardei documentos da folha/DAE, quando houve empregado.','Salvei o recibo da DASN-SIMEI e anotei pendências para resolver.']}
+];
+var KEY='mei-em-dia-v1',st,openSet={s1:true},onlyPend=false;
+function load(){try{st=JSON.parse(localStorage.getItem(KEY))}catch(e){st=null}
+ if(!st||typeof st!=='object')st={};
+ st.p=st.p||{};st.m=st.m||{};st.y=st.y||{};st.noEmp=!!st.noEmp;
+ if(!st.p.mes){var d=new Date();st.p.mes=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+function mes(){return st.p.mes||''}
+function ano(){return mes().slice(0,4)}
+function bucket(sec){var k=sec.scope==='y'?ano():mes(),o=sec.scope==='y'?st.y:st.m;o[k]=o[k]||{c:{}};return o[k]}
+function applicable(sec){return !(sec.optional&&st.noEmp)}
+function stat(sec){var b=bucket(sec).c,n=sec.items.length,d=0;for(var i=0;i<n;i++)if(b[sec.id+'_'+i])d++;return{n:n,d:d}}
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function fmt(d){return d.toLocaleDateString('pt-BR')}
+function daysTo(d){var t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/864e5)}
+function facts(){
+ var m=mes().split('-'),y=+m[0],mo=+m[1];if(!y)return;
+ var due=new Date(y,mo,20),n=daysTo(due),f=$('fDas');
+ f.className='fact'+(n<0?' warn':'');
+ f.innerHTML='<small>DAS de '+String(mo).padStart(2,'0')+'/'+y+' vence em '+fmt(due)+'</small><strong>'+(n<0?'Atrasado há '+(-n)+' dia'+(n<-1?'s':''):n===0?'Vence hoje':'Faltam '+n+' dia'+(n>1?'s':''))+'</strong>';
+ var dd=new Date(y+1,4,31),k=daysTo(dd),g=$('fDasn');
+ g.className='fact'+(k<0?' warn':'');
+ g.innerHTML='<small>Receitas de '+y+' · prazo '+fmt(dd)+'</small><strong>'+(k<0?'Prazo encerrado':'Faltam '+k+' dias')+'</strong>';
+}
+function progress(){
+ var n=0,d=0;SECS.forEach(function(s){if(!applicable(s))return;var x=stat(s);n+=x.n;d+=x.d});
+ var p=n?Math.round(d/n*100):0;
+ $('barFill').style.width=p+'%';$('barTxt').textContent='Progresso: '+d+' de '+n+' itens · '+p+'%';
+ $('bar').setAttribute('aria-valuenow',p);$('bar').classList.toggle('full',p===100);
+}
+function render(){
+ var h='',shown=0;
+ SECS.forEach(function(s){
+  if(!applicable(s)&&onlyPend)return;
+  var x=stat(s),b=bucket(s).c,ok=applicable(s),pc=x.n?Math.round(x.d/x.n*100):0;
+  if(onlyPend&&ok&&x.d===x.n)return;
+  shown++;
+  var isOpen=openSet[s.id]||onlyPend;
+  h+='<div class="sec'+(isOpen?' open':'')+'" style="--c:'+s.c+'" id="'+s.id+'">'
+   +'<button class="head" data-t="'+s.id+'" aria-expanded="'+(isOpen?'true':'false')+'"><span class="ring">'+(ok&&x.d===x.n?'✓':s.ic)+'</span><span class="hd"><h3>'+s.n+'</h3><p>'+s.d+'</p>'
+   +'<div class="mini"><i style="width:'+(ok?pc:0)+'%"></i></div><div class="tag">'+s.tag+' · '+(ok?x.d+' de '+x.n:'não se aplica')+(s.scope==='y'?' · ano '+ano():'')+'</div></span><span class="chev" aria-hidden="true">›</span></button>'
+   +'<div class="body">';
+  if(s.optional)h+='<label class="opt"><input type="checkbox" data-emp'+(st.noEmp?' checked':'')+'> Não tenho empregado (ocultar esta etapa do progresso)</label>';
+  if(ok){
+   if(s.intro)h+='<p class="intro">'+s.intro+'</p>';
+   s.items.forEach(function(t,i){var id=s.id+'_'+i;if(onlyPend&&b[id])return;
+    h+='<label class="it"><input type="checkbox" data-k="'+id+'" data-s="'+s.id+'"'+(b[id]?' checked':'')+'><span>'+esc(t)+'</span></label>'});
+   if(s.hint)h+='<p class="intro">'+s.hint+'</p>';
+   h+='<div class="secbtns">'+(s.link?'<a class="link" target="_blank" rel="noopener" href="'+s.link[1]+'">'+s.link[0]+' ↗</a>':'')+'<button class="btn" data-all="'+s.id+'">Marcar esta etapa</button></div>';
+  }
+  h+='</div></div>';
+ });
+ if(!shown)h='<div class="empty"><strong>Tudo em dia neste mês.</strong><br>Nenhuma pendência encontrada.</div>';
+ $('list').innerHTML=h;progress();facts();
+}
+function setAll(secs,val){secs.forEach(function(s){if(!applicable(s))return;var b=bucket(s).c;s.items.forEach(function(_,i){if(val)b[s.id+'_'+i]=true;else delete b[s.id+'_'+i]})});save();render()}
+load();
+$('list').addEventListener('click',function(e){
+ var t=e.target.closest('[data-t]');
+ if(t){openSet[t.dataset.t]=!openSet[t.dataset.t];render();return}
+ var a=e.target.closest('[data-all]');
+ if(a){setAll(SECS.filter(function(s){return s.id===a.dataset.all}),true)}
+});
+$('list').addEventListener('change',function(e){
+ var el=e.target;
+ if(el.hasAttribute('data-emp')){st.noEmp=el.checked;save();render();return}
+ if(el.dataset.k){var s=SECS.filter(function(x){return x.id===el.dataset.s})[0],b=bucket(s).c;
+  if(el.checked)b[el.dataset.k]=true;else delete b[el.dataset.k];
+  save();var y=window.scrollY;render();window.scrollTo(0,y)}
+});
+$('bPend').onclick=function(){onlyPend=!onlyPend;this.setAttribute('aria-pressed',onlyPend);this.textContent=onlyPend?'Ver todos os itens':'Ver pendências';render()};
+$('bAll').onclick=function(){if(confirm('Marcar todos os itens do mês como concluídos?'))setAll(SECS,true)};
+$('bReset').onclick=function(){if(confirm('Zerar todas as marcações deste mês? Os dados do negócio e os lembretes são mantidos.'))setAll(SECS,false)};
+$('bOpen').onclick=function(){var any=SECS.some(function(s){return openSet[s.id]});SECS.forEach(function(s){openSet[s.id]=!any});render()};
+$('bPrint').onclick=function(){window.print()};
+['pNome','pCnpj','pAtv'].forEach(function(id){var k={pNome:'nome',pCnpj:'cnpj',pAtv:'atv'}[id];$(id).value=st.p[k]||'';
+ $(id).addEventListener('input',function(){st.p[k]=this.value;save()})});
+$('pMes').addEventListener('change',function(){if(!this.value)return;st.p.mes=this.value;save();$('notes').value=noteGet();render()});
+function noteGet(){return (st.n&&st.n[mes()])||''}
+$('notes').addEventListener('input',function(){st.n=st.n||{};st.n[mes()]=this.value;save()});
+</script>
+<script>
+$('pMes').value=mes();$('notes').value=noteGet();render();
+</script>
+</body>
+</html>
